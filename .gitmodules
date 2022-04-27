@@ -1,3 +1,4 @@
 [submodule "owl-verbalizer"]
 	path = owl-verbalizer
 	url = https://github.com/katonaaron/owl-verbalizer.git
+	branch = master
