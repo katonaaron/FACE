@@ -1,7 +1,7 @@
 import com.katonaaron.commons.axiomsToOntology
 import com.katonaaron.onto.*
-import org.semanticweb.owlapi.formats.OWLXMLDocumentFormat
-import java.io.FileOutputStream
+import com.katonaaron.provenance.PROVENANCE_IRI_ANNOTATION
+import org.semanticweb.owlapi.model.OWLAxiom
 
 fun printFactCheckerResult(verbalizer: OntologyVerbalizer, result: FactCheckerResult) {
     print("The given ontology is: ")
@@ -58,9 +58,18 @@ fun printUnsatisfiableClasses(verbalizer: OntologyVerbalizer, explanations: Coll
     }
 }
 
+fun OWLAxiom.verbalize(verbalizer: OntologyVerbalizer): String {
+    val o = axiomsToOntology(listOf(this))
+    val df = o.owlOntologyManager.owlDataFactory
+    val text = verbalizer.verbalizeOntology(o)
+    val source = this.getAnnotations(df.getOWLAnnotationProperty(PROVENANCE_IRI_ANNOTATION)).first()!!.value
+
+    return "$text <$source>"
+}
+
 fun printAxiomExplanations(verbalizer: OntologyVerbalizer, explanations: Collection<AxiomExplanation>) {
     explanations.forEachIndexed { idx, explanation ->
-        println("Axiom #$idx: " + verbalizer.verbalizeOntology(axiomsToOntology(listOf(explanation.axiom))))
+        println("Axiom #$idx: " + explanation.axiom.verbalize(verbalizer))
         printExplanations(verbalizer, explanation.justifications)
         println()
     }
@@ -75,11 +84,13 @@ fun printExplanations(verbalizer: OntologyVerbalizer, explanations: Collection<E
 
 fun printExplanation(verbalizer: OntologyVerbalizer, explanation: Explanation) {
     val axioms = explanation.axioms
-    val explOnto = axiomsToOntology(axioms)
 
-    println(verbalizer.verbalizeOntology(explOnto))
+    axioms.forEach { println(it.verbalize(verbalizer)) }
+
+/*    val explOnto = axiomsToOntology(axioms)
+    println(verbalizer.verbalizeOntology(explOnto))*/
 //    println("axioms: $axioms")
 
     // Debug
-    explOnto.saveOntology(OWLXMLDocumentFormat(), FileOutputStream("explanation.owl"))
+//    explOnto.saveOntology(OWLXMLDocumentFormat(), FileOutputStream("explanation.owl"))
 }

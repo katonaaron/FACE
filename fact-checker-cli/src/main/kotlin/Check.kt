@@ -6,6 +6,8 @@ import com.katonaaron.fred.FredOntologyLearner
 import com.katonaaron.learner.DummyOntologyLearner
 import com.katonaaron.merge.OwlApiOntologyMerger
 import com.katonaaron.processor.fred.FredOntologyProcessor
+import com.katonaaron.provenance.PROVENANCE_IRI_INPUT
+import com.katonaaron.provenance.annotateProvenance
 import com.katonaaron.verbalizer.OwlVerbalizerProxy
 import kotlinx.cli.*
 import org.semanticweb.HermiT.ReasonerFactory
@@ -86,10 +88,12 @@ class Check : Subcommand("check", "Performs fact checking") {
 
         // Perform fact checking
 
-        val o = learner.learnOntologyFromText(text)
+        var o = learner.learnOntologyFromText(text)
         o.saveOntology(OWLXMLDocumentFormat(), FileOutputStream("unprocessed.owl"))
         processor.processOntology(o)
         println("learned ontology:\n" + verbalizer.verbalizeOntology(o))
+
+        o = annotateProvenance(o, PROVENANCE_IRI_INPUT)
 
         val fc = fcFactory.createOntologyFactChecker(kb)
         val result = fc.factCheck(o)

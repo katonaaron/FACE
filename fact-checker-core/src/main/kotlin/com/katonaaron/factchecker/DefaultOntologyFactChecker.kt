@@ -3,6 +3,8 @@ package com.katonaaron.factchecker
 import com.katonaaron.commons.add
 import com.katonaaron.commons.getEntityType
 import com.katonaaron.onto.*
+import com.katonaaron.provenance.PROVENANCE_IRI_ANNOTATION
+import com.katonaaron.provenance.PROVENANCE_IRI_WORDNET
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLOntology
 import java.io.FileOutputStream
@@ -109,7 +111,14 @@ class DefaultOntologyFactChecker(
                     System.err.println("Wrong entity type in hypernym: parent <$parent>: $typeParent child <$child>: $typeChild")
                     null
                 }
-            }
+            }?.getAnnotatedAxiom(
+                setOf(
+                    df.getOWLAnnotation(
+                        df.getOWLAnnotationProperty(PROVENANCE_IRI_ANNOTATION),
+                        PROVENANCE_IRI_WORDNET
+                    )
+                )
+            )
         }.toSet()
         kb.add(axioms)
 

@@ -4,6 +4,7 @@
     <module name="fact-checker.fact-checker-cli.main" />
     <option name="PROGRAM_PARAMETERS" value="check -i ontos/text-2.txt -kb ontos/fact.owl --onto learned.owl --dummy ontos/text-2-fred.owl" />
     <shortenClasspath name="NONE" />
+    <option name="VM_PARAMETERS" value="-ea" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="false" />
       <option name="IS_SUBST" value="false" />

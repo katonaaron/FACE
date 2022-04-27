@@ -28,7 +28,14 @@
     <Declaration>
         <NamedIndividual IRI="#SARS-CoV-2"/>
     </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="http://katonaaron.com/onto#Source"/>
+    </Declaration>
     <SubClassOf>
+        <Annotation>
+            <AnnotationProperty IRI="http://katonaaron.com/onto#Source"/>
+            <IRI>https://doi.org/10.48550/arXiv.2004.12330</IRI>
+        </Annotation>
         <Class IRI="#Antibiotics"/>
         <ObjectAllValuesFrom>
             <ObjectProperty IRI="#Kill"/>
@@ -36,12 +43,20 @@
         </ObjectAllValuesFrom>
     </SubClassOf>
     <SubClassOf>
+        <Annotation>
+            <AnnotationProperty IRI="http://katonaaron.com/onto#Source"/>
+            <IRI>https://doi.org/10.48550/arXiv.2004.12330</IRI>
+        </Annotation>
         <Class IRI="#Virus"/>
         <ObjectComplementOf>
             <Class IRI="#Bacteria"/>
         </ObjectComplementOf>
     </SubClassOf>
     <ClassAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="http://katonaaron.com/onto#Source"/>
+            <IRI>https://doi.org/10.48550/arXiv.2004.12330</IRI>
+        </Annotation>
         <Class IRI="#Virus"/>
         <NamedIndividual IRI="#SARS-CoV-2"/>
     </ClassAssertion>
