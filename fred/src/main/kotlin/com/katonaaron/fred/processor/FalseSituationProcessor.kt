@@ -1,9 +1,8 @@
-package com.katonaaron.processor.fred
+package com.katonaaron.fred.processor
 
 import com.katonaaron.commons.*
 import com.katonaaron.onto.OntologyProcessor
-import de.derivo.sparqldlapi.QueryEngine
-import de.derivo.sparqldlapi.Var
+import com.katonaaron.sparqldsl.*
 import org.semanticweb.owlapi.formats.OWLXMLDocumentFormat
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLOntology
@@ -15,7 +14,6 @@ class FalseSituationProcessor(
     private val namespace: String
 ) : OntologyProcessor {
     private val iriBoxing = "http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#"
-    private val iriFredQuant = "http://www.ontologydesignpatterns.org/ont/fred/quantifiers.owl#"
 
     override fun processOntology(onto: OWLOntology) {
         val man = onto.owlOntologyManager
@@ -25,11 +23,11 @@ class FalseSituationProcessor(
         val situation = df.getOWLClass("${namespace}Situation")
 
         if (!onto.classesInSignature.contains(situation)) {
-            println("not found: $situation")
+            logger.trace("not found: $situation")
             return
         }
 
-        val engine = QueryEngine.create(man, r, true)
+        val engine = QueryEngine(man, r, true)
 
         val vSituation = Var("situation")
         val vTarget = Var("target")
@@ -58,7 +56,7 @@ class FalseSituationProcessor(
                 }
             }
 
-        println("situations = $situations")
+        logger.trace("situations = $situations")
 
         situations.forEach { (situationIri, involvedIris) ->
             assert(involvedIris.size == 2)
@@ -97,21 +95,26 @@ class FalseSituationProcessor(
             }
         }
 
-        println("type($iriIndividual, $iriClass) = $isType")
+        logger.trace("type($iriIndividual, $iriClass) = $isType")
 
         if (!isType)
             return false
 
-        val isMultiple = sparqlAsk(engine) {
-            prefixes {
-                prefix("quant:", iriFredQuant)
-            }
-            ask {
-                propertyValue(iriIndividual, "quant:hasQuantifier", "quant:multiple")
-            }
-        }
+/*        val isMultiple = onto.objectPropertiesInSignature
+            .find { it.iri == IRI.create(iriFredQuant, "hasQuantifier") } // Check if exists
+            ?.let {
+                sparqlAsk(engine) {
+                    prefixes {
+                        prefix("quant:", iriFredQuant)
+                    }
+                    ask {
+                        propertyValue(iriIndividual, "quant:hasQuantifier", "quant:multiple")
+                    }
+                }
+            } ?: false
 
-        println("isMultiple = $isMultiple")
+
+        logger.trace("isMultiple = $isMultiple")*/
 
         val man = onto.owlOntologyManager
         val df = man.owlDataFactory
@@ -119,34 +122,34 @@ class FalseSituationProcessor(
         val clazz = df.getOWLClass(iriClass)
         val indiv = df.getOWLNamedIndividual(iriIndividual)
 
-        if (isMultiple) {
-            onto.remove(
-                df.getOWLClassAssertionAxiom(clazz, indiv)
-            )
+        /*      if (isMultiple) {
+                  onto.remove(
+                      df.getOWLClassAssertionAxiom(clazz, indiv)
+                  )
 
-            val r = reasonerFactory.createReasoner(onto)
-            val types = r.getTypes(indiv, true)
-                .flatMap { it.entities }
-                .filter { it.iri.namespace == namespace }
+                  val r = reasonerFactory.createReasoner(onto)
+                  val types = r.getTypes(indiv, true)
+                      .flatMap { it.entities }
+                      .filter { it.iri.namespace == namespace }
 
-            removeEntity(onto, indiv)
+                  removeEntity(onto, indiv)
 
-            if (types.isEmpty()) {
-                // The individual should be a class
-                println("Individual converted to class: <$iriIndividual>")
-                onto.add(
-                    df.getOWLSubClassOfAxiom(df.getOWLClass(iriIndividual), df.getOWLObjectComplementOf(clazz))
-                )
-            } else {
-                println("Classes updated of instance: <$iriIndividual>")
-                // The classes of the instance
-                types.forEach { type ->
-                    onto.add(
-                        df.getOWLSubClassOfAxiom(type, df.getOWLObjectComplementOf(clazz))
-                    )
-                }
-            }
-        } else {
+                  if (types.isEmpty()) {
+                      // The individual should be a class
+                      logger.debug("Individual converted to class: <$iriIndividual>")
+                      onto.add(
+                          df.getOWLSubClassOfAxiom(df.getOWLClass(iriIndividual), df.getOWLObjectComplementOf(clazz))
+                      )
+                  } else {
+                      logger.debug("Classes updated of instance: <$iriIndividual>")
+                      // The classes of the instance
+                      types.forEach { type ->
+                          onto.add(
+                              df.getOWLSubClassOfAxiom(type, df.getOWLObjectComplementOf(clazz))
+                          )
+                      }
+                  }
+              } else {*/
             onto.remove(
                 df.getOWLClassAssertionAxiom(clazz, indiv)
             )
@@ -154,18 +157,12 @@ class FalseSituationProcessor(
             onto.add(
                 df.getOWLClassAssertionAxiom(df.getOWLObjectComplementOf(clazz), indiv)
             )
-        }
+        /*}*/
 
         return true
     }
 
     private fun printResults(results: List<Map<Var, IRI>>) {
-        print("sparql results = [")
-        results.forEach { resultMap ->
-            print("{\n")
-            print(resultMap.map { "\t" + it.key.name + "=" + it.value }.joinToString(",\n"))
-            println("\n}")
-        }
-        println("]")
+        logger.trace("sparql results = ${formatResults(results)}")
     }
 }

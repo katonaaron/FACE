@@ -2,6 +2,7 @@ package com.katonaaron.explanation
 
 import com.katonaaron.onto.Explanation
 import com.katonaaron.onto.OntologyExplanationGenerator
+import com.katonaaron.provenance.toAxiomWithSource
 import org.semanticweb.owl.explanation.api.ExplanationGeneratorFactory
 import org.semanticweb.owl.explanation.api.ExplanationManager
 import org.semanticweb.owl.explanation.impl.blackbox.checker.InconsistentOntologyExplanationGeneratorFactory
@@ -40,7 +41,7 @@ class OwlExplanationGenerator(
         val gen = genFac.createExplanationGenerator(ontology)
 
         return gen.getExplanations(axiomGen(dataFactory))
-            .map { Explanation(it.axioms) }
+            .map { explanation -> Explanation(explanation.axioms.map { it.toAxiomWithSource(dataFactory) }.toSet()) }
             .toSet()
     }
 }

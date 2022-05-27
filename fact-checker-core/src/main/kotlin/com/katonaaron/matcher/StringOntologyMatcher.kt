@@ -1,70 +1,30 @@
 package com.katonaaron.matcher
 
-import com.katonaaron.onto.MatchingResult
-import com.katonaaron.onto.OntologyMatcher
-import com.katonaaron.onto.Synonym
-import org.semanticweb.owlapi.apibinding.OWLManager
+import com.katonaaron.commons.logger
+import com.katonaaron.onto.Hypernym
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLEntity
-import org.semanticweb.owlapi.model.OWLOntology
 
-class StringOntologyMatcher : OntologyMatcher {
-    override fun matchOntologies(resultIri: IRI, onto1: OWLOntology, onto2: OWLOntology): OWLOntology {
-        val man = OWLManager.createOWLOntologyManager()
-        val df = man.owlDataFactory
+class StringOntologyMatcher : BaseOntologyMatcher() {
+    private val iri = IRI.create("http://katonaaron.com/matcher#StringOntologyMatcher")
 
-        val axioms = matchOntologiesToPairs(resultIri, onto1, onto2).map { pair ->
-            df.getOWLEquivalentClassesAxiom(df.getOWLClass(pair.first), df.getOWLClass(pair.second))
-        }.toSet()
+    override fun matchEntities(
+        iriToSynonymSet: MutableMap<IRI, MutableSet<IRI>>,
+        hypernyms: MutableSet<Hypernym>,
+        entities1: Collection<OWLEntity>,
+        entities2: Collection<OWLEntity>
+    ) {
+        val entityMap: Map<String, OWLEntity> = entities1.associateBy { processIri(it.iri) }
 
-        return man.createOntology(axioms, resultIri)
-    }
-
-    override fun matchOntologies(onto1: OWLOntology, onto2: OWLOntology): MatchingResult {
-        val iriToSynonymSet = mutableMapOf<IRI, MutableSet<IRI>>()
-
-        matchOntologiesToPairs(IRI.generateDocumentIRI(), onto1, onto2).forEach { (iri1, iri2) ->
-            val synset: MutableSet<IRI> = iriToSynonymSet[iri1] ?: iriToSynonymSet[iri2] ?: mutableSetOf()
-
-            if (synset.isEmpty()) {
-                iriToSynonymSet[iri1] = synset
-            }
-
-            synset.add(iri1)
-            synset.add(iri2)
-        }
-
-        val synonyms = iriToSynonymSet.values
-            .map { Synonym(it) }
-
-        return MatchingResult(synonyms, emptyList())
-    }
-
-    override fun matchOntologiesToPairs(
-        resultIri: IRI,
-        onto1: OWLOntology,
-        onto2: OWLOntology
-    ): Collection<Pair<IRI, IRI>> {
-        val entityMap: Map<String, OWLEntity> = onto1.signature
-            .filter { !it.isBuiltIn }
-            .associateBy { entityToString(it) }
-
-        val matching = onto2.signature
-            .filter { !it.isBuiltIn }
-            .mapNotNull { thisEntity ->
-                entityMap[entityToString(thisEntity)]
-                    ?.let { otherEntity ->
-                        Pair(
-                            otherEntity.iri,
-                            thisEntity.iri
-                        )
+        entities2
+            .forEach { entity1 ->
+                entityMap[processIri(entity1.iri)]
+                    ?.let { entity2 ->
+                        logger.trace("Synonym found: ${entity1.iri} ${entity2.iri}")
+                        addSynonym(iriToSynonymSet, hypernyms, entity1, entity2, iri)
                     }
             }
-
-        println("matching = $matching")
-
-        return matching
     }
 
-    private fun entityToString(entity: OWLEntity): String = entity.iri.remainder.get()!!.lowercase()
+    private fun processIri(iri: IRI): String = iri.remainder.get()!!.lowercase().trim()
 }

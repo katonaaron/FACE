@@ -1,5 +1,6 @@
 package com.katonaaron.processor
 
+import com.katonaaron.commons.logger
 import com.katonaaron.onto.OntologyProcessor
 import org.semanticweb.owlapi.model.OWLClass
 import org.semanticweb.owlapi.model.OWLOntology
@@ -30,7 +31,7 @@ class RemoveClassAndItsInstancesProcessor(
         clazz.accept(remover)
 
         val changes = remover.changes
-        println("changes = $changes")
+        logger.trace("changes = $changes")
         val status = onto.owlOntologyManager.applyChanges(changes)
         if (status == ChangeApplied.UNSUCCESSFULLY) {
             throw RuntimeException("Could not perform change")

@@ -7,7 +7,7 @@ import org.semanticweb.owlapi.model.OWLOntology
 import org.semanticweb.owlapi.model.parameters.OntologyCopy
 import org.semanticweb.owlapi.util.OWLOntologyMerger
 
-class OwlApiOntologyMerger : OntologyMerger {
+class DefaultOntologyMerger : OntologyMerger {
     override fun merge(resultIri: IRI, vararg ontologies: OWLOntology): OWLOntology {
         val man = OWLManager.createOWLOntologyManager()
 

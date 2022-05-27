@@ -1,10 +1,11 @@
 package com.katonaaron.entailment
 
 import com.katonaaron.onto.*
+import com.katonaaron.provenance.toAxiomWithSource
 import org.semanticweb.owl.explanation.impl.blackbox.checker.SatisfiabilityEntailmentChecker.UnsupportedAxiomTypeException
 import org.semanticweb.owlapi.model.OWLOntology
 
-class OwlApiEntailmentDetector(
+class DefaultEntailmentDetector(
     private val explanationGenerator: OntologyExplanationGenerator
 ) : EntailmentDetector {
 
@@ -16,7 +17,7 @@ class OwlApiEntailmentDetector(
                     null
                 } else {
                     AxiomExplanation(
-                        axiom,
+                        axiom.toAxiomWithSource(),
                         explanations
                     )
                 }

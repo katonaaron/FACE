@@ -9,10 +9,10 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerFactory
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class OwlApiOntologyMergerTest {
+internal class DefaultOntologyMergerTest {
     private val ior: IRI = IRI.create("http://com.katonaaron/test")
 
-    private val merger = OwlApiOntologyMerger()
+    private val merger = DefaultOntologyMerger()
 
     @Test
     fun `test merge two ontologies`() {

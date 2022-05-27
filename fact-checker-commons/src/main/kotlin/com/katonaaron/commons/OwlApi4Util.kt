@@ -14,6 +14,10 @@ fun OWLOntology.add(axioms: Set<OWLAxiom>) {
     owlOntologyManager.addAxioms(this, axioms)
 }
 
+fun OWLOntology.add(axioms: Collection<OWLAxiom>) {
+    owlOntologyManager.addAxioms(this, axioms.toSet())
+}
+
 fun OWLOntology.remove(vararg axioms: OWLAxiom) {
     owlOntologyManager.removeAxioms(this, axioms.toSet())
 }
@@ -46,6 +50,10 @@ fun OWLOntology.clone(man: OWLOntologyManager): OWLOntology {
 
 fun OWLOntology.clone(): OWLOntology {
     return clone(OWLManager.createOWLOntologyManager())
+}
+
+fun axiomsToOntology(vararg axioms: OWLAxiom): OWLOntology {
+    return axiomsToOntology(axioms.toSet())
 }
 
 fun axiomsToOntology(axioms: Collection<OWLAxiom>): OWLOntology {

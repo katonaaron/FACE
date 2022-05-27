@@ -1,5 +1,6 @@
 package com.katonaaron.processor
 
+import com.katonaaron.commons.logger
 import com.katonaaron.onto.OntologyProcessor
 import org.semanticweb.owlapi.model.OWLOntology
 import org.semanticweb.owlapi.model.parameters.ChangeApplied
@@ -29,7 +30,7 @@ class RemoveWithSameIriAsAClassProcessor(
             }
         }
 
-        println("changes = ${remover.changes}")
+        logger.trace("changes = ${remover.changes}")
 
         val status = onto.owlOntologyManager.applyChanges(remover.changes)
         if (status == ChangeApplied.UNSUCCESSFULLY) {

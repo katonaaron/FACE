@@ -1,4 +1,4 @@
-package com.katonaaron.processor.fred
+package com.katonaaron.fred.processor
 
 import com.katonaaron.commons.getOWLClass
 import com.katonaaron.commons.isCoherent
@@ -12,7 +12,6 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerFactory
 class FredOntologyProcessor(
     private val reasonerFactory: OWLReasonerFactory
 ) : OntologyProcessor {
-    private val iri = "http://katonaaron.com/fred-proc#"
     private val iriFred = "http://www.ontologydesignpatterns.org/ont/fred/domain.owl#"
 
     private val classesToRemove = listOf(
@@ -37,13 +36,14 @@ class FredOntologyProcessor(
                 )
             )
             .next(RemoveWithSameIriAsAClassProcessor(iriFred)) // TODO: Sure?
-            .next(VerbNetRoleProcessor(reasonerFactory, iri, iriFred))
+            .next(VerbNetRoleProcessor(reasonerFactory, iriFred))
             .next(
                 FilterProcessor {
                     when {
                         it.isBuiltIn -> true
                         it.isOWLClass && it.iri.namespace != iriFred -> false
                         it.isOWLNamedIndividual && it.iri.namespace != iriFred -> false
+                        it.isOWLObjectProperty && it.iri.namespace != iriFred -> false
                         else -> true
                     }
                 }
