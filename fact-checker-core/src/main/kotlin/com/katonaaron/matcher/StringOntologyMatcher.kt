@@ -6,7 +6,6 @@ import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLEntity
 
 class StringOntologyMatcher : BaseOntologyMatcher() {
-    private val iri = IRI.create("http://katonaaron.com/matcher#StringOntologyMatcher")
 
     override fun matchEntities(
         iriToSynonymSet: MutableMap<IRI, MutableSet<IRI>>,
@@ -21,7 +20,7 @@ class StringOntologyMatcher : BaseOntologyMatcher() {
                 entityMap[processIri(entity1.iri)]
                     ?.let { entity2 ->
                         logger.trace("Synonym found: ${entity1.iri} ${entity2.iri}")
-                        addSynonym(iriToSynonymSet, hypernyms, entity1, entity2, iri)
+                        addSynonym(iriToSynonymSet, entity1, entity2)
                     }
             }
     }

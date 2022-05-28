@@ -28,6 +28,7 @@ class DefaultOntologyFactChecker(
         // DEBUG: save the aligned ontologies
         o.saveOntology(FileOutputStream("o-aligned.owl"))
         kb.saveOntology(FileOutputStream("kb-aligned.owl"))
+        logger.debug("Alignment finished")
 
         // 3. Detect entailment
         val entailmentResult = entailmentDetector.detectEntailment(o, kb)
@@ -36,7 +37,7 @@ class DefaultOntologyFactChecker(
         logger.trace("entailmentResult result: $entailmentResult")
 
         if (entailmentResult.isTotalEntailment) {
-            return True(entailment)
+            return True(entailment, o)
         }
 
         // 4. Merge the ontologies
@@ -49,9 +50,9 @@ class DefaultOntologyFactChecker(
         logger.trace("conflictDetector result: $result")
 
         if (result !is NoConflict) {
-            return False(result, entailment)
+            return False(result, entailment, o)
         }
 
-        return Unknown(entailment)
+        return Unknown(entailment, o)
     }
 }

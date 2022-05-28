@@ -26,10 +26,19 @@ data class EntailmentDetectionResult(val entailment: Entailment, val isTotalEnta
 
 sealed class OntologyFactCheckerResult {
     abstract val entailment: Entailment
+    abstract val alignedOntology: OWLOntology
 
-    data class True(override val entailment: Entailment) : OntologyFactCheckerResult()
-    data class False(val reason: Conflict, override val entailment: Entailment) : OntologyFactCheckerResult()
-    data class Unknown(override val entailment: Entailment) : OntologyFactCheckerResult()
+    data class True(override val entailment: Entailment, override val alignedOntology: OWLOntology) :
+        OntologyFactCheckerResult()
+
+    data class False(
+        val reason: Conflict,
+        override val entailment: Entailment,
+        override val alignedOntology: OWLOntology
+    ) : OntologyFactCheckerResult()
+
+    data class Unknown(override val entailment: Entailment, override val alignedOntology: OWLOntology) :
+        OntologyFactCheckerResult()
 }
 
 data class FactCheckerResult(val result: OntologyFactCheckerResult, val learnedOntology: OWLOntology)

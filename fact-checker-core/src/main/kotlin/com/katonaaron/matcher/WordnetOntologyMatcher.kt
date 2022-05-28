@@ -47,7 +47,7 @@ class WordnetOntologyMatcher : BaseOntologyMatcher() {
 
                 if (immediateRelationship != -1) { // Synonyms
                     logger.trace("Synonym found: $iri1 $iri2 ${word1.senses[immediateRelationship - 1]}")
-                    addSynonym(iriToSynonymSet, hypernyms, entity1, entity2, iri)
+                    addSynonym(iriToSynonymSet, entity1, entity2)
                     return@entity2ForEach
                 }
 

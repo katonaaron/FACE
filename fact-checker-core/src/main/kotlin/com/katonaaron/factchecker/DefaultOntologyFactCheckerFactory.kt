@@ -9,7 +9,6 @@ import com.katonaaron.merge.DefaultOntologyMerger
 import com.katonaaron.onto.OntologyFactChecker
 import com.katonaaron.onto.OntologyFactCheckerFactory
 import com.katonaaron.onto.OntologyMatcher
-import com.katonaaron.replacer.DefaultIRIReplacer
 import org.semanticweb.owlapi.model.OWLOntology
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory
 
@@ -22,7 +21,7 @@ class DefaultOntologyFactCheckerFactory(
     ): OntologyFactChecker =
         DefaultOntologyFactChecker(
             knowledgeBase,
-            DefaultOntologyAligner(matcher, DefaultIRIReplacer()),
+            DefaultOntologyAligner(matcher),
             DefaultConflictDetector(reasonerFactory, OwlExplanationGenerator(reasonerFactory)),
             DefaultEntailmentDetector(OwlExplanationGenerator(reasonerFactory)),
             DefaultOntologyMerger()

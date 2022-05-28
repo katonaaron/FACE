@@ -1,6 +1,5 @@
 package com.katonaaron.matcher
 
-import com.katonaaron.commons.logger
 import com.katonaaron.onto.Hypernym
 import com.katonaaron.onto.MatchingResult
 import com.katonaaron.onto.OntologyMatcher
@@ -46,30 +45,28 @@ abstract class BaseOntologyMatcher : OntologyMatcher {
 
     protected fun addSynonym(
         iriToSynonymSet: MutableMap<IRI, MutableSet<IRI>>,
-        hypernyms: MutableSet<Hypernym>,
         entity1: OWLEntity,
-        entity2: OWLEntity,
-        matcherIRI: IRI
+        entity2: OWLEntity
     ) {
         val iri1 = entity1.iri
         val iri2 = entity2.iri
 
-        if (entity1.entityType != entity2.entityType) {
-            // Entity matching with different types
-            when {
-                entity1.isOWLClass && entity2.isOWLNamedIndividual ->
-                    hypernyms.add(Hypernym(iri1, iri2, matcherIRI))
-                entity1.isOWLNamedIndividual && entity2.isOWLClass ->
-                    hypernyms.add(Hypernym(iri2, iri1, matcherIRI))
-                else -> {
-                    logger.error("Unsupported entity types for synonyms: $iri1 $iri2")
-                    return
-                }
+        /*  if (entity1.entityType != entity2.entityType) {
+              // Entity matching with different types
+              when {
+                  entity1.isOWLClass && entity2.isOWLNamedIndividual ->
+                      hypernyms.add(Hypernym(iri1, iri2, matcherIRI))
+                  entity1.isOWLNamedIndividual && entity2.isOWLClass ->
+                      hypernyms.add(Hypernym(iri2, iri1, matcherIRI))
+                  else -> {
+                      logger.error("Unsupported entity types for synonyms: $iri1 $iri2")
+                      return
+                  }
 
-            }
-            logger.warn("Synonym for different entity types: $iri1 $iri2. Hypernym created")
-            return
-        }
+              }
+              logger.warn("Synonym for different entity types: $iri1 $iri2. Hypernym created")
+              return
+          }*/
 
         val synset: MutableSet<IRI> = iriToSynonymSet[iri1] ?: iriToSynonymSet[iri2] ?: mutableSetOf()
 
