@@ -7,7 +7,7 @@ import org.semanticweb.owlapi.model.OWLAxiom
 import org.semanticweb.owlapi.model.OWLDataFactory
 import org.semanticweb.owlapi.model.OWLOntology
 
-val PROVENANCE_IRI_ANNOTATION = IRI.create("http://katonaaron.com/onto#Source")
+val PROVENANCE_IRI_ANNOTATION = IRI.create("http://www.w3.org/ns/prov#wasDerivedFrom")
 
 val PROVENANCE_IRI_WORDNET = IRI.create("https://wordnet.princeton.edu/")
 
