@@ -45,7 +45,7 @@ class DefaultOntologyAligner(
                 if ((!o.containsEntityInSignature(parent) && !b.containsEntityInSignature(parent))
                     || (!o.containsEntityInSignature(child) && !b.containsEntityInSignature(child))
                 ) {
-                    println("not contained: $parent $child")
+                    logger.trace("not contained: $parent $child")
                     null
                 } else {
                     this
@@ -251,6 +251,8 @@ class DefaultOntologyAligner(
             val conceptSource = indToConcept[source]
             val conceptTarget = indToConcept[target]
 
+            logger.trace("Role fix: $source($conceptSource) $role $target($conceptTarget)")
+
             when {
                 conceptSource == null && conceptTarget == null -> {
                     // Both remained individuals
@@ -258,87 +260,25 @@ class DefaultOntologyAligner(
                 }
                 conceptSource != null && conceptTarget != null -> {
                     // Both are concepts
-                    // Create existential restriction to the target concept
-
-//                    toAdd.add(
-//                        df.getOWLSubClassOfAxiom(
-//                            conceptSource,
-//                            df.getOWLObjectSomeValuesFrom(role, conceptTarget)
-//                        )
-//                    )
 
                     toAdd.add(
                         df.getOWLSubClassOfAxiom(
                             conceptTarget,
-                            df.getOWLObjectMinCardinality(
-                                1,
+                            df.getOWLObjectSomeValuesFrom(
                                 df.getOWLObjectInverseOf(role),
                                 conceptSource
                             )
                         )
                     )
-
-//                    toAdd.add(
-//                        df.getOWLSubClassOfAxiom(
-//                            df.getOWLObjectSomeValuesFrom(role, conceptTarget),
-//                            conceptSource
-//                        )
-//                    )
-
-//                    toAdd.add(
-//                        df.getOWLSubClassOfAxiom(
-//                            df.getOWLObjectIntersectionOf(
-//                                conceptSource,
-//                                df.getOWLObjectSomeValuesFrom(role, conceptTarget)
-//                            ),
-//                            df.owlThing
-//                        )
-//                    )
-
                 }
 
                 conceptSource != null && conceptTarget == null -> {
                     // The source is a concept, the target is an instance
-                    // Create existential restriction to a nominal formed by the target
-
-//                    toAdd.add(
-//                        df.getOWLSubClassOfAxiom(
-//                            conceptSource,
-//                            df.getOWLObjectSomeValuesFrom(
-//                                role,
-//                                df.getOWLObjectOneOf(target)
-//                            )
-//                        )
-//                    )
-
-//                    toAdd.add(
-//                        df.getOWLSubClassOfAxiom(
-//                            df.getOWLObjectSomeValuesFrom(
-//                                role,
-//                                df.getOWLObjectOneOf(target)
-//                            ),
-//                            conceptSource
-//                        )
-//                    )
-
-//                    toAdd.add(
-//                        df.getOWLSubClassOfAxiom(
-//                            df.getOWLObjectIntersectionOf(
-//                                conceptSource,
-//                                df.getOWLObjectSomeValuesFrom(
-//                                    role,
-//                                    df.getOWLObjectOneOf(target)
-//                                )
-//                            ),
-//                            df.owlThing
-//                        )
-//                    )
 
                     toAdd.add(
                         df.getOWLSubClassOfAxiom(
                             df.getOWLObjectOneOf(target),
-                            df.getOWLObjectMinCardinality(
-                                1,
+                            df.getOWLObjectSomeValuesFrom(
                                 df.getOWLObjectInverseOf(role),
                                 conceptSource
                             )
@@ -348,22 +288,11 @@ class DefaultOntologyAligner(
 
                 conceptSource == null && conceptTarget != null -> {
                     // The source is an instance, the target is a concept
-                    // Create existential restriction from a nominal formed by the source, to the target
 
-//                    toAdd.add(
-//                        df.getOWLSubClassOfAxiom(
-//                            df.getOWLObjectOneOf(source),
-//                            df.getOWLObjectSomeValuesFrom(
-//                                role,
-//                                conceptTarget
-//                            )
-//                        )
-//                    )
                     toAdd.add(
                         df.getOWLSubClassOfAxiom(
                             conceptTarget,
-                            df.getOWLObjectMinCardinality(
-                                1,
+                            df.getOWLObjectSomeValuesFrom(
                                 df.getOWLObjectInverseOf(role),
                                 df.getOWLObjectOneOf(source)
                             )
