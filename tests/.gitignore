@@ -1,0 +1,8 @@
+**/*
+!.gitignore
+!README.md
+!*.sh
+!test-*.in.txt
+!test-*.out.txt
+!test-*.png
+!test-*.owl

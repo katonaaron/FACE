@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Check" type="JetRunConfigurationType">
+  <configuration default="false" name="Check test 10" type="JetRunConfigurationType">
     <option name="MAIN_CLASS_NAME" value="com.katonaaron.factcheckercli.FactCheckerApplicationKt" />
     <module name="fact-checker.fact-checker-cli.main" />
-    <option name="PROGRAM_PARAMETERS" value="check -i ontos/text-1.txt" />
+    <option name="PROGRAM_PARAMETERS" value="check -i tests/test-10.in.txt" />
     <shortenClasspath name="NONE" />
-    <option name="VM_PARAMETERS" value="-Dconfig.override.fred.dummy=ontos/text-1-fred.owl" />
+    <option name="VM_PARAMETERS" value="-ea -Dconfig.override.fred.dummy=tests/test-10.owl" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="false" />
       <option name="IS_SUBST" value="false" />

@@ -13,53 +13,138 @@
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Import>http://www.w3.org/ns/prov-o-20130430</Import>
     <Declaration>
-        <Class IRI="#Antibiotics"/>
+        <Class IRI="#Antibiotic"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Bacteria"/>
+        <Class IRI="#Bacterium"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Coronavirus"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Disease"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Nutrient"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Supplement"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Virus"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="#Kill"/>
+        <ObjectProperty IRI="#cause"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#cure"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#kill"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#COVID-19"/>
     </Declaration>
     <Declaration>
         <NamedIndividual IRI="#SARS-CoV-2"/>
     </Declaration>
     <Declaration>
-        <AnnotationProperty IRI="http://katonaaron.com/onto#Source"/>
+        <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
     </Declaration>
     <SubClassOf>
         <Annotation>
-            <AnnotationProperty IRI="http://katonaaron.com/onto#Source"/>
-            <IRI>https://doi.org/10.48550/arXiv.2004.12330</IRI>
+            <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
+            <IRI>https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters#antibiotics</IRI>
         </Annotation>
-        <Class IRI="#Antibiotics"/>
+        <Class IRI="#Antibiotic"/>
         <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#Kill"/>
-            <Class IRI="#Bacteria"/>
+            <ObjectProperty IRI="#kill"/>
+            <Class IRI="#Bacterium"/>
         </ObjectAllValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Annotation>
-            <AnnotationProperty IRI="http://katonaaron.com/onto#Source"/>
+            <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
+            <IRI>https://en.wikipedia.org/wiki/Coronavirus</IRI>
+        </Annotation>
+        <Class IRI="#Coronavirus"/>
+        <Class IRI="#Virus"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Annotation>
+            <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
+            <IRI>https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters#supplements</IRI>
+        </Annotation>
+        <Class IRI="#Disease"/>
+        <ObjectAllValuesFrom>
+            <ObjectInverseOf>
+                <ObjectProperty IRI="#cure"/>
+            </ObjectInverseOf>
+            <ObjectComplementOf>
+                <Class IRI="#Supplement"/>
+            </ObjectComplementOf>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Annotation>
+            <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
+            <IRI>https://en.wikipedia.org/wiki/Dietary_supplement</IRI>
+        </Annotation>
+        <Class IRI="#Nutrient"/>
+        <Class IRI="#Supplement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Annotation>
+            <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
             <IRI>https://doi.org/10.48550/arXiv.2004.12330</IRI>
         </Annotation>
         <Class IRI="#Virus"/>
         <ObjectComplementOf>
-            <Class IRI="#Bacteria"/>
+            <Class IRI="#Bacterium"/>
         </ObjectComplementOf>
     </SubClassOf>
     <ClassAssertion>
         <Annotation>
-            <AnnotationProperty IRI="http://katonaaron.com/onto#Source"/>
-            <IRI>https://doi.org/10.48550/arXiv.2004.12330</IRI>
+            <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
+            <IRI>https://en.wikipedia.org/wiki/COVID-19</IRI>
         </Annotation>
-        <Class IRI="#Virus"/>
+        <Class IRI="#Disease"/>
+        <NamedIndividual IRI="#COVID-19"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
+            <IRI>https://en.wikipedia.org/wiki/COVID-19</IRI>
+        </Annotation>
+        <ObjectAllValuesFrom>
+            <ObjectInverseOf>
+                <ObjectProperty IRI="#cause"/>
+            </ObjectInverseOf>
+            <ObjectOneOf>
+                <NamedIndividual IRI="#SARS-CoV-2"/>
+            </ObjectOneOf>
+        </ObjectAllValuesFrom>
+        <NamedIndividual IRI="#COVID-19"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
+            <IRI>https://en.wikipedia.org/wiki/Severe_acute_respiratory_syndrome_coronavirus_2</IRI>
+        </Annotation>
+        <Class IRI="#Coronavirus"/>
         <NamedIndividual IRI="#SARS-CoV-2"/>
     </ClassAssertion>
+    <ObjectPropertyAssertion>
+        <Annotation>
+            <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
+            <IRI>https://en.wikipedia.org/wiki/COVID-19</IRI>
+        </Annotation>
+        <ObjectProperty IRI="#cause"/>
+        <NamedIndividual IRI="#SARS-CoV-2"/>
+        <NamedIndividual IRI="#COVID-19"/>
+    </ObjectPropertyAssertion>
 </Ontology>
 
 
