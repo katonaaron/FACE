@@ -1,17 +1,24 @@
-package com.katonaaron.commons
+package com.katonaaron.sparqldsl
 
 import de.derivo.sparqldlapi.Query
-import de.derivo.sparqldlapi.QueryEngine
-import de.derivo.sparqldlapi.Var
+import de.derivo.sparqldlapi.QueryResult
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLLiteral
+import org.semanticweb.owlapi.model.OWLOntologyManager
+import org.semanticweb.owlapi.reasoner.OWLReasoner
+import org.slf4j.LoggerFactory
 import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImplString
+
+data class Var(val name: String)
+
+private fun de.derivo.sparqldlapi.Var.toExternal(): Var = Var(name)
 
 private fun IRI.format(): String = "<$this>"
 private fun Var.format(): String = "?$name"
 private fun OWLLiteral.format(): String = "\"${literal}\""
 
 val VAR_ALL = Var("*")
+private val logger = LoggerFactory.getLogger("SparqlDLS")
 
 private fun <T> format(primitive: T) = when (primitive) {
     is String -> {
@@ -268,17 +275,22 @@ fun queryBuilder(builderProducer: () -> QueryBuilder): String {
     return builder.build()
 }
 
+data class QueryEngine(val manager: OWLOntologyManager, val reasoner: OWLReasoner, val strict: Boolean = false) {
+    private val engine = de.derivo.sparqldlapi.QueryEngine.create(manager, reasoner, strict)
+
+    fun execute(query: Query): QueryResult = engine.execute(query)
+}
+
 fun sparql(engine: QueryEngine, builderProducer: () -> SelectQueryBuilder): List<Map<Var, IRI>> {
     val queryString = queryBuilder(builderProducer)
-    println("queryString = $queryString")
-//    return query(engine, queryString)
+    logger.trace("queryString = $queryString")
 
     val result = engine.execute(Query.create(queryString))
 
     return if (result.ask()) {
         result.map { queryBinding ->
             queryBinding.boundArgs.associate { arg ->
-                arg.valueAsVar to queryBinding[arg].valueAsIRI
+                arg.valueAsVar.toExternal() to queryBinding[arg].valueAsIRI
             }
         }
     } else {
@@ -288,7 +300,7 @@ fun sparql(engine: QueryEngine, builderProducer: () -> SelectQueryBuilder): List
 
 fun sparqlAsk(engine: QueryEngine, builderProducer: AskQueryBuilder.() -> Unit): Boolean {
     val queryString = queryBuilder { AskQueryBuilder().apply(builderProducer) }
-    println("queryString = $queryString")
+    logger.trace("queryString = $queryString")
 
     val result = engine.execute(Query.create(queryString))
 
