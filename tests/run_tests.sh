@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 testStart=1
-testEnd=13
+testEnd=18
 program="factcheck"
 version="1.0-SNAPSHOT"
 tarPath="../fact-checker-cli/build/distributions/$program-$version.tar"

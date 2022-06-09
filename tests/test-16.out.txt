@@ -1,0 +1,21 @@
+Input text: Sars-CoV-2 is not a Bacterium.
+
+
+Knowledge base:
+Everything that is kill by an Antibiotic is a Bacterium.
+Every Coronavirus is a Virus.
+No Disease is cure by a Supplement.
+Every Nutrient is a Supplement.
+No Virus is a Bacterium.
+COVID-19 is a Disease.
+Everything that cause COVID-19 is something that is SARS-CoV-2.
+SARS-CoV-2 is a Coronavirus.
+SARS-CoV-2 cause COVID-19.
+
+Learned ontology:
+sars-cov-2 is not a Bacterium.
+
+Result: 
+The given ontology is: Unknown
+
+Entailed axioms: none

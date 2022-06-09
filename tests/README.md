@@ -18,8 +18,10 @@ program.
 | 11  | SARS-Cov-2 is a virus and a bacterium.                  | FALSE    ||
 | 12  | SARS-CoV-2 is a virus or a bacterium or an infection.   | TRUE     ||
 | 13  | Vitamin C heals Covid-19.                               | FALSE    ||
+| 14  | Sars-CoV-2 is a virus.                                  | TRUE     ||
+| 15  | Sars-CoV-2 is not a virus.                              | FALSE    ||
+| 16  | Sars-CoV-2 is not a Bacterium.                          | TRUE     ||
+| 17  | Bacitracin is not a disease.                            | TRUE     ||
+| 18  | Bacitracin is a vaccine.                                | FALSE    ||
 
-    2. Covid-19 is caused by SARS-CoV-2.
-    3. Covid-19 is caused by a Cornavirus.
-    4. Covid-19 is caused by a Bacteria. - false
     5. Drinking alcohol prevents Covid-19

@@ -1,0 +1,28 @@
+Input text: Bacitracin is a vaccine.
+
+
+Knowledge base:
+Everything that is kill by an Antibiotic is a Bacterium.
+Every Coronavirus is a Virus.
+No Disease is cure by a Supplement.
+Every Nutrient is a Supplement.
+No Virus is a Bacterium.
+COVID-19 is a Disease.
+Everything that cause COVID-19 is something that is SARS-CoV-2.
+SARS-CoV-2 is a Coronavirus.
+SARS-CoV-2 cause COVID-19.
+
+Learned ontology:
+Bacitracin is a Vaccine.
+
+Result: 
+The given ontology is: False
+
+Inconsistency:
+Explanation #0:
+Bacitracin is an Antibiotic. <https://wordnet.princeton.edu/>
+Bacitracin is a Vaccine. <http://katonaaron.com/input>
+No Antibiotic is a Vaccine. <https://wordnet.princeton.edu/>
+
+
+Entailed axioms: none
