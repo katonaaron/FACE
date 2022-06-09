@@ -2,6 +2,7 @@ package com.katonaaron.provenance
 
 import com.katonaaron.commons.axiomsToOntology
 import com.katonaaron.onto.Axiom
+import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLAxiom
 import org.semanticweb.owlapi.model.OWLDataFactory
@@ -11,7 +12,8 @@ val PROVENANCE_IRI_ANNOTATION = IRI.create("http://www.w3.org/ns/prov#wasDerived
 
 val PROVENANCE_IRI_WORDNET = IRI.create("https://wordnet.princeton.edu/")
 
-val PROVENANCE_IRI_INPUT = IRI.create("http://katonaaron.com/input")
+const val PROVENANCE_IRI_INPUT_VALUE = "http://katonaaron.com/input"
+val PROVENANCE_IRI_INPUT = IRI.create(PROVENANCE_IRI_INPUT_VALUE)
 
 fun annotateProvenance(onto: OWLOntology, source: IRI): OWLOntology {
     val df = onto.owlOntologyManager.owlDataFactory
@@ -23,17 +25,16 @@ fun annotateProvenance(onto: OWLOntology, source: IRI): OWLOntology {
     }
 }
 
-val OWLAxiom.source: IRI?
-    get() {
-        val o = axiomsToOntology(listOf(this))
-        val df = o.owlOntologyManager.owlDataFactory
-        return getSource(df)
-    }
+private val df = OWLManager.createOWLOntologyManager().owlDataFactory
 
-fun OWLAxiom.getSource(df: OWLDataFactory): IRI? =
+val OWLAxiom.sources: Set<IRI>
+    get() = getSources(df)
+
+fun OWLAxiom.getSources(df: OWLDataFactory): Set<IRI> =
     this.getAnnotations(df.getOWLAnnotationProperty(PROVENANCE_IRI_ANNOTATION))
-        .firstOrNull()?.value?.asIRI()?.orNull()
+        .mapNotNull { it.value.asIRI().orNull() }
+        .toSet()
 
-fun OWLAxiom.toAxiomWithSource(): Axiom = Axiom(this, source)
-fun OWLAxiom.toAxiomWithSource(df: OWLDataFactory): Axiom = Axiom(this, getSource(df))
+fun OWLAxiom.toAxiomWithSource(): Axiom = Axiom(this, sources)
+fun OWLAxiom.toAxiomWithSource(df: OWLDataFactory): Axiom = Axiom(this, getSources(df))
 

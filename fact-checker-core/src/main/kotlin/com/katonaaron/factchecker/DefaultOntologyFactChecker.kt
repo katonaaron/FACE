@@ -1,6 +1,7 @@
 package com.katonaaron.factchecker
 
 import com.katonaaron.commons.logger
+import com.katonaaron.commons.remove
 import com.katonaaron.onto.*
 import com.katonaaron.onto.OntologyFactCheckerResult.*
 import com.katonaaron.provenance.PROVENANCE_IRI_INPUT
@@ -44,15 +45,18 @@ class DefaultOntologyFactChecker(
         val merged = merger.merge(mergedIri, o, kb)
         merged.saveOntology(FileOutputStream("merged.owl"))
 
+        merged.remove(entailment.entailedAxioms.map { it.axiom.axiom }.toSet())
+
         // 5. Detect the conflict in the merged ontology
-        val result = conflictDetector.detectConflict(merged)
+        val conflict = conflictDetector.detectConflict(merged)
 
-        logger.trace("conflictDetector result: $result")
+        logger.trace("conflictDetector result: $conflict")
 
-        if (result !is NoConflict) {
-            return False(result, entailment, o)
+        if (conflict !is NoConflict) {
+            return False(conflict, entailment, o)
         }
 
         return Unknown(entailment, o)
     }
+
 }
