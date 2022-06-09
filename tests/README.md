@@ -1,6 +1,6 @@
 # Test sentences
 
-Consider the knowledge base `ontos/fact.owl`. Below is a list of sentences for test the different features of the
+Consider the knowledge base `ontos/fact.owl`. Below is a list of sentences for testing the different features of the
 program.
 
 | #   | Text                                                    | Decision | Comment                               |
@@ -16,7 +16,7 @@ program.
 | 9   | Covid-19 is caused by a coronavirus.                    | TRUE     | 8 + concept matching                  |
 | 10  | Covid-19 is caused by a bacterium.                      | FALSE    ||
 | 11  | SARS-Cov-2 is a virus and a bacterium.                  | FALSE    ||
-| 12  | SARS-CoV-2 is a virus or a bacterium or an infection.   | TRUE     ||
+| 12  | SARS-CoV-2 is a virus or a bacterium or an infection.   | TRUE     | Type disjunction pattern              |
 | 13  | Vitamin C heals Covid-19.                               | FALSE    ||
 | 14  | Sars-CoV-2 is a virus.                                  | TRUE     ||
 | 15  | Sars-CoV-2 is not a virus.                              | FALSE    ||

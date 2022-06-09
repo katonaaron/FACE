@@ -98,7 +98,7 @@
     <SubClassOf>
         <Annotation>
             <AnnotationProperty IRI="http://www.w3.org/ns/prov#wasDerivedFrom"/>
-            <IRI>https://doi.org/10.48550/arXiv.2004.12330</IRI>
+            <IRI>https://www.healthdirect.gov.au/bacterial-vs-viral-infection</IRI>
         </Annotation>
         <Class IRI="#Virus"/>
         <ObjectComplementOf>
