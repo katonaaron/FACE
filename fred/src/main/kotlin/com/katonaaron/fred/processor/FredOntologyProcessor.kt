@@ -35,6 +35,7 @@ class FredOntologyProcessor(
                     df.getOWLClass("${iriFred}Situation")
                 )
             )
+            .next(TypeDisjunctionOntologyProcessor(reasonerFactory, iriFred))
             .next(RemoveWithSameIriAsAClassProcessor(iriFred)) // TODO: Sure?
             .next(VerbNetRoleProcessor(reasonerFactory, iriFred))
             .next(
