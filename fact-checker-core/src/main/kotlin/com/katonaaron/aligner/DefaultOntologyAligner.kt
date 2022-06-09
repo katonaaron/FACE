@@ -1,10 +1,7 @@
 package com.katonaaron.aligner
 
 import com.katonaaron.commons.*
-import com.katonaaron.onto.Hypernym
-import com.katonaaron.onto.OntologyAligner
-import com.katonaaron.onto.OntologyMatcher
-import com.katonaaron.onto.Synonym
+import com.katonaaron.onto.*
 import com.katonaaron.provenance.PROVENANCE_IRI_ANNOTATION
 import com.katonaaron.provenance.PROVENANCE_IRI_INPUT
 import org.semanticweb.owlapi.apibinding.OWLManager
@@ -53,7 +50,27 @@ class DefaultOntologyAligner(
             }
         }
 
+        val disjoints = result.disjoints.mapNotNull { disjoint ->
+            val newDisjoint = disjoint.run {
+                copy(
+                    iri1 = matching[iri1] ?: iri1,
+                    iri2 = matching[iri2] ?: iri2
+                )
+            }
+            newDisjoint.run {
+                if ((!o.containsEntityInSignature(iri1) && !b.containsEntityInSignature(iri1))
+                    || (!o.containsEntityInSignature(iri2) && !b.containsEntityInSignature(iri2))
+                ) {
+                    logger.trace("not contained: $iri1 $iri2")
+                    null
+                } else {
+                    this
+                }
+            }
+        }
+
         handleHypernyms(o, b, hypernyms)
+        handleDisjoints(o, b, disjoints)
 
         return Pair(o, b)
     }
@@ -77,6 +94,49 @@ class DefaultOntologyAligner(
                     df.getOWLClassAssertionAxiom(df.getOWLClass(parent), df.getOWLNamedIndividual(child))
                 else -> {
                     logger.error("Wrong entity type in hypernym: parent <$parent>: $typeParent child <$child>: $typeChild")
+                    null
+                }
+            }?.getAnnotatedAxiom(
+                setOf(
+                    df.getOWLAnnotation(
+                        df.getOWLAnnotationProperty(PROVENANCE_IRI_ANNOTATION),
+                        matcherIri
+                    )
+                )
+            )
+        }.toSet()
+        base.add(axioms)
+    }
+
+    private fun handleDisjoints(
+        onto: OWLOntology,
+        base: OWLOntology,
+        disjoints: Collection<Disjoint>,
+    ) {
+        val df = base.owlOntologyManager.owlDataFactory
+
+        // Add subclass axioms to the knowledge base
+        val axioms = disjoints.mapNotNull { (iri1, iri2, matcherIri) ->
+            val type1 = getEntityType(base, iri1) ?: getEntityType(onto, iri1)!!
+            val type2 = getEntityType(base, iri2) ?: getEntityType(onto, iri2)!!
+
+            when {
+                type1.isOWLClass && type2.isOWLClass ->
+                    df.getOWLDisjointClassesAxiom(df.getOWLClass(iri1), df.getOWLClass(iri2))
+                type1.isOWLClass && type2.isOWLNamedIndividual ->
+                    df.getOWLClassAssertionAxiom(
+                        df.getOWLObjectComplementOf(df.getOWLClass(iri1)),
+                        df.getOWLNamedIndividual(iri2)
+                    )
+                type1.isOWLNamedIndividual && type2.isOWLClass ->
+                    df.getOWLClassAssertionAxiom(
+                        df.getOWLObjectComplementOf(df.getOWLClass(iri2)),
+                        df.getOWLNamedIndividual(iri1)
+                    )
+                type1.isOWLNamedIndividual && type2.isOWLNamedIndividual ->
+                    df.getOWLDifferentIndividualsAxiom(df.getOWLNamedIndividual(iri1), df.getOWLNamedIndividual(iri2))
+                else -> {
+                    logger.warn("Wrong entity type in disjoint: iri1 <$iri1>: $type1 iri2 <$iri2>: $type2")
                     null
                 }
             }?.getAnnotatedAxiom(
@@ -180,9 +240,7 @@ class DefaultOntologyAligner(
 
                         // NOTE: Assumed that there are no role constraints
                         convertConceptToInd(onto, concept, ind, toAdd, toRemove)
-
-                        val iriNew = IRI.create(iriInd.namespace, nameNew)
-                        toReplace[iriInd] = iriNew
+                        matching[iriInd] = kbEntity
                     }
                     else -> throw IllegalStateException("Wrong kb entity type: $kbEntityType")
                 }

@@ -1,6 +1,7 @@
 package com.katonaaron.matcher
 
 import com.katonaaron.commons.logger
+import com.katonaaron.onto.Disjoint
 import com.katonaaron.onto.Hypernym
 import com.katonaaron.provenance.PROVENANCE_IRI_WORDNET
 import net.sf.extjwnl.data.POS
@@ -19,6 +20,7 @@ class WordnetOntologyMatcher : BaseOntologyMatcher() {
     override fun matchEntities(
         iriToSynonymSet: MutableMap<IRI, MutableSet<IRI>>,
         hypernyms: MutableSet<Hypernym>,
+        disjoints: MutableSet<Disjoint>,
         entities1: Collection<OWLEntity>,
         entities2: Collection<OWLEntity>
     ) {
@@ -29,6 +31,11 @@ class WordnetOntologyMatcher : BaseOntologyMatcher() {
             val pos1 = entityTypeToPos(entity1.entityType) ?: return@entity1ForEach
 
             val word1 = dictionary.lookupIndexWord(pos1, rem1) ?: return@entity1ForEach
+
+            // Must have the same number of hyphens, otherwise wrongly matched
+            if (word1.lemma.count { it == '-' } != rem1.count { it == '-' }) {
+                return@entity1ForEach
+            }
 
             entities2.forEach entity2ForEach@{ entity2 ->
                 val iri2 = entity2.iri
@@ -42,6 +49,11 @@ class WordnetOntologyMatcher : BaseOntologyMatcher() {
                 }
 
                 val word2 = dictionary.lookupIndexWord(pos2, rem2) ?: return@entity2ForEach
+
+                // Must have the same number of hyphens, otherwise wrongly matched
+                if (word2.lemma.count { it == '-' } != rem2.count { it == '-' }) {
+                    return@entity2ForEach
+                }
 
                 val immediateRelationship = RelationshipFinder.getImmediateRelationship(word1, word2)
 
@@ -74,6 +86,9 @@ class WordnetOntologyMatcher : BaseOntologyMatcher() {
                             }
                     }
                 }
+
+                // There is no synonym or hypernym relationship between the two entities
+                disjoints.add(Disjoint(iri1, iri2, iri))
             }
         }
     }

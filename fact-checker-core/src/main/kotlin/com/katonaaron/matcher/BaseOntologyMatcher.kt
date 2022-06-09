@@ -1,9 +1,6 @@
 package com.katonaaron.matcher
 
-import com.katonaaron.onto.Hypernym
-import com.katonaaron.onto.MatchingResult
-import com.katonaaron.onto.OntologyMatcher
-import com.katonaaron.onto.Synonym
+import com.katonaaron.onto.*
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLEntity
 import org.semanticweb.owlapi.model.OWLOntology
@@ -13,6 +10,7 @@ abstract class BaseOntologyMatcher : OntologyMatcher {
     override fun matchOntologies(onto1: OWLOntology, onto2: OWLOntology): MatchingResult {
         val iriToSynonymSet = mutableMapOf<IRI, MutableSet<IRI>>()
         val hypernyms = mutableSetOf<Hypernym>()
+        val disjoints = mutableSetOf<Disjoint>()
 
         listOf(
             onto1.classesInSignature + onto1.individualsInSignature to onto2.classesInSignature + onto2.individualsInSignature,
@@ -26,19 +24,28 @@ abstract class BaseOntologyMatcher : OntologyMatcher {
                 entities1.filter { !it.isBuiltIn } to
                         entities2.filter { !it.isBuiltIn }
             }
-            .forEach { (entities1, entities2) -> matchEntities(iriToSynonymSet, hypernyms, entities1, entities2) }
+            .forEach { (entities1, entities2) ->
+                matchEntities(
+                    iriToSynonymSet,
+                    hypernyms,
+                    disjoints,
+                    entities1,
+                    entities2
+                )
+            }
 
 
         val synonyms = iriToSynonymSet.values
             .distinct()
             .map { Synonym(it) }
             .toSet()
-        return MatchingResult(synonyms, hypernyms)
+        return MatchingResult(synonyms, hypernyms, disjoints)
     }
 
     abstract fun matchEntities(
         iriToSynonymSet: MutableMap<IRI, MutableSet<IRI>>,
         hypernyms: MutableSet<Hypernym>,
+        disjoints: MutableSet<Disjoint>,
         entities1: Collection<OWLEntity>,
         entities2: Collection<OWLEntity>
     )
@@ -50,23 +57,6 @@ abstract class BaseOntologyMatcher : OntologyMatcher {
     ) {
         val iri1 = entity1.iri
         val iri2 = entity2.iri
-
-        /*  if (entity1.entityType != entity2.entityType) {
-              // Entity matching with different types
-              when {
-                  entity1.isOWLClass && entity2.isOWLNamedIndividual ->
-                      hypernyms.add(Hypernym(iri1, iri2, matcherIRI))
-                  entity1.isOWLNamedIndividual && entity2.isOWLClass ->
-                      hypernyms.add(Hypernym(iri2, iri1, matcherIRI))
-                  else -> {
-                      logger.error("Unsupported entity types for synonyms: $iri1 $iri2")
-                      return
-                  }
-
-              }
-              logger.warn("Synonym for different entity types: $iri1 $iri2. Hypernym created")
-              return
-          }*/
 
         val synset: MutableSet<IRI> = iriToSynonymSet[iri1] ?: iriToSynonymSet[iri2] ?: mutableSetOf()
 
