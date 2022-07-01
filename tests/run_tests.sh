@@ -1,10 +1,12 @@
 #!/usr/bin/env sh
 
+# Params
 testStart=1
-testEnd=18
+testEnd=16
 program="factcheck"
 version="1.0-SNAPSHOT"
-tarPath="../fact-checker-cli/build/distributions/$program-$version.tar"
+cliModule="cli"
+tarPath="../$cliModule/build/distributions/$program-$version.tar"
 testDir="tests"
 exe="$program-$version/bin/$program"
 knowledgeBase="../ontos/fact.owl"
@@ -12,9 +14,9 @@ knowledgeBase="../ontos/fact.owl"
 # Setup
 cd ..
 # build CLI
-./gradlew fact-checker-cli:build
+./gradlew "$cliModule:build" || exit 1
 # start verbalizer
-docker-compose  up -d owl-verbalizer
+docker-compose  up -d owl-verbalizer || exit 1
 cd "$testDir" || exit 1
 # extract cli
 tar xvf "$tarPath"
@@ -31,8 +33,8 @@ for i in $(seq $testStart $testEnd) ; do
 
     echo "$inFile, $owlFile -> $outFile"
 
-    export DUMMY="$owlFile"
-    export KNOWLEDGE_BASE="$knowledgeBase"
+    export FACE_FRED_DUMMY="$owlFile"
+    export FACE_KB="$knowledgeBase"
     $exe check -i "$inFile" > "$outFile"
 done
 

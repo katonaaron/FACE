@@ -2,29 +2,30 @@ Input text: Antibiotics kill viruses.
 
 
 Knowledge base:
-Everything that is kill by an Antibiotic is a Bacterium.
-Every Coronavirus is a Virus.
-No Disease is cure by a Supplement.
-Every Nutrient is a Supplement.
-No Virus is a Bacterium.
-COVID-19 is a Disease.
-Everything that cause COVID-19 is something that is SARS-CoV-2.
-SARS-CoV-2 is a Coronavirus.
-SARS-CoV-2 cause COVID-19.
+1.Everything that is kill by an Antibiotic is a Bacterium.
+2.Every Coronavirus is a Virus.
+3.No Disease is cure by a Supplement.
+4.Every Nutrient is a Supplement.
+5.No Virus is a Bacterium.
+6.COVID-19 is a Disease.
+7.Everything that cause COVID-19 is something that is SARS-CoV-2.
+8.SARS-CoV-2 is a Coronavirus.
+9.SARS-CoV-2 cause COVID-19.
 
 Learned ontology:
-Every Virus is kill by an Antibiotic.
+1.Every Virus is kill by an Antibiotic.
 
-Result: 
-The given ontology is: False
+Result: The given text is: False
 
 Inconsistency:
-Explanation #0:
-Everything that is kill by an Antibiotic is a Bacterium. <https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters#antibiotics>
-SARS-CoV-2 is a Coronavirus. <https://en.wikipedia.org/wiki/Severe_acute_respiratory_syndrome_coronavirus_2>
-No Virus is a Bacterium. <https://doi.org/10.48550/arXiv.2004.12330>
-Every Coronavirus is a Virus. <https://en.wikipedia.org/wiki/Coronavirus>
-Every Virus is kill by an Antibiotic. <http://katonaaron.com/input>
+Explanation #1:
+	knowledge from input text:
+1.Every Virus is kill by an Antibiotic.
+	knowledge from trusted sources (counterspeech):
+1.Everything that is kill by an Antibiotic is a Bacterium. (https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters#antibiotics)
+2.No Virus is a Bacterium. (https://www.healthdirect.gov.au/bacterial-vs-viral-infection)
+3.SARS-CoV-2 is a Coronavirus. (https://en.wikipedia.org/wiki/Severe_acute_respiratory_syndrome_coronavirus_2)
+4.Every Coronavirus is a Virus. (https://en.wikipedia.org/wiki/Coronavirus)
 
 
 Entailed axioms: none
