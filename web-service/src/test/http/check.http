@@ -1,0 +1,2 @@
+GET http://localhost:8080/check?text=Antibiotics kill viruses
+Accept: application/json

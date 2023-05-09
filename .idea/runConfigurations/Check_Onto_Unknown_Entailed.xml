@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Check-Onto Unknown Entailed" type="JetRunConfigurationType">
-    <option name="MAIN_CLASS_NAME" value="FactCheckerApplicationKt" />
-    <module name="fact-checker.fact-checker-cli.main" />
-    <option name="PROGRAM_PARAMETERS" value="check-onto -i $PROJECT_DIR$/ontos/unknown-entailed.owl -kb $PROJECT_DIR$/ontos/fact.owl" />
+    <option name="MAIN_CLASS_NAME" value="com.katonaaron.factcheckercli.FactCheckerApplicationKt" />
+    <module name="fact-checker.cli.main" />
+    <option name="PROGRAM_PARAMETERS" value="check-onto -i $PROJECT_DIR$/ontos/unknown-entailed.owl" />
     <shortenClasspath name="NONE" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="false" />

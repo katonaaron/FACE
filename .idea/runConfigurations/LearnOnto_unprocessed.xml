@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="LearnOnto unprocessed" type="JetRunConfigurationType">
-    <option name="MAIN_CLASS_NAME" value="FactCheckerApplicationKt" />
+    <option name="MAIN_CLASS_NAME" value="com.katonaaron.factcheckercli.FactCheckerApplicationKt" />
     <module name="fact-checker.fact-checker-cli.main" />
     <option name="PROGRAM_PARAMETERS" value="learn-onto -i ontos/text-4.txt -o learned.owl" />
     <shortenClasspath name="NONE" />

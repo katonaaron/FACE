@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="LearnOnto" type="JetRunConfigurationType">
-    <option name="MAIN_CLASS_NAME" value="FactCheckerApplicationKt" />
+    <option name="MAIN_CLASS_NAME" value="com.katonaaron.factcheckercli.FactCheckerApplicationKt" />
     <module name="fact-checker.fact-checker-cli.main" />
-    <option name="PROGRAM_PARAMETERS" value="learn-onto -i ontos/text-2.txt -o result.owl --process --dummy ontos/text-4-fred.owl" />
+    <option name="PROGRAM_PARAMETERS" value="learn-onto -h" />
     <shortenClasspath name="NONE" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="false" />

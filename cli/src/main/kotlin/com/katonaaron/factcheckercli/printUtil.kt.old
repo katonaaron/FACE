@@ -1,0 +1,93 @@
+import com.katonaaron.commons.axiomsToOntology
+import com.katonaaron.onto.*
+import com.katonaaron.onto.OntologyFactCheckerResult.*
+
+fun printFactCheckerResult(verbalizer: OntologyVerbalizer, result: OntologyFactCheckerResult) {
+    print("The given ontology is: ")
+    when (result) {
+        is False -> {
+            println("False")
+
+            val reason = result.reason
+            print("Reason: ")
+            when (reason) {
+                is Incoherence -> {
+                    com.katonaaron.factcheckercli.printIncoherence(verbalizer, reason)
+                }
+                is Inconsistency -> {
+                    com.katonaaron.factcheckercli.printInconsistency(verbalizer, reason)
+                }
+                NoConflict -> throw RuntimeException("Should not be false if there is no conflict")
+            }
+        }
+        is True -> {
+            println("True")
+        }
+        is Unknown -> println("Unknown")
+    }
+
+    com.katonaaron.factcheckercli.printEntailment(verbalizer, result.entailment)
+}
+
+fun com.katonaaron.factcheckercli.printEntailment(verbalizer: OntologyVerbalizer, entailment: Entailment) {
+    if (entailment.isEmpty) {
+        println("Entailed axioms: none")
+        return
+    }
+
+    println("Entailed axioms:")
+    com.katonaaron.factcheckercli.printAxiomExplanations(verbalizer, entailment.entailedAxioms)
+}
+
+fun com.katonaaron.factcheckercli.printIncoherence(verbalizer: OntologyVerbalizer, incoherence: Incoherence) {
+    println("Incoherence")
+    com.katonaaron.factcheckercli.printUnsatisfiableClasses(verbalizer, incoherence.explanations)
+}
+
+fun com.katonaaron.factcheckercli.printInconsistency(verbalizer: OntologyVerbalizer, inconsistency: Inconsistency) {
+    println("Inconsistency")
+    com.katonaaron.factcheckercli.printExplanations(verbalizer, inconsistency.explanations)
+}
+
+fun com.katonaaron.factcheckercli.printUnsatisfiableClasses(verbalizer: OntologyVerbalizer, explanations: Collection<ClassExplanation>) {
+    explanations.forEachIndexed { idx, explanation ->
+        println("Unsatisfiable class #$idx: ${explanation.clazz}")
+        com.katonaaron.factcheckercli.printExplanations(verbalizer, explanation.justifications)
+        println()
+    }
+}
+
+fun Axiom.verbalize(verbalizer: OntologyVerbalizer): String {
+    val o = axiomsToOntology(listOf(axiom))
+    val text = verbalizer.verbalizeOntology(o)
+
+    return "$text <$source>"
+}
+
+fun com.katonaaron.factcheckercli.printAxiomExplanations(verbalizer: OntologyVerbalizer, explanations: Collection<AxiomExplanation>) {
+    explanations.forEachIndexed { idx, explanation ->
+        println("Axiom #$idx: " + explanation.axiom.verbalize(verbalizer))
+        com.katonaaron.factcheckercli.printExplanations(verbalizer, explanation.justifications)
+        println()
+    }
+}
+
+fun com.katonaaron.factcheckercli.printExplanations(verbalizer: OntologyVerbalizer, explanations: Collection<Explanation>) {
+    explanations.forEachIndexed { index, expl ->
+        println("Explanation #$index:")
+        com.katonaaron.factcheckercli.printExplanation(verbalizer, expl)
+    }
+}
+
+fun com.katonaaron.factcheckercli.printExplanation(verbalizer: OntologyVerbalizer, explanation: Explanation) {
+    val axioms = explanation.axioms
+
+    axioms.forEach { println(it.verbalize(verbalizer)) }
+
+/*    val explOnto = axiomsToOntology(axioms)
+    println(verbalizer.verbalizeOntology(explOnto))*/
+//    println("axioms: $axioms")
+
+    // Debug
+//    explOnto.saveOntology(OWLXMLDocumentFormat(), FileOutputStream("explanation.owl"))
+}

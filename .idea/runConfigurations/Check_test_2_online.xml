@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Check test 2 online" type="JetRunConfigurationType">
     <option name="MAIN_CLASS_NAME" value="com.katonaaron.factcheckercli.FactCheckerApplicationKt" />
-    <module name="fact-checker.fact-checker-cli.main" />
+    <module name="fact-checker.cli.main" />
     <option name="PROGRAM_PARAMETERS" value="check -i tests/test-2.in.txt" />
     <shortenClasspath name="NONE" />
     <option name="VM_PARAMETERS" value="-ea" />

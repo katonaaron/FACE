@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Check-Onto Entailed TBox" type="JetRunConfigurationType">
-    <option name="MAIN_CLASS_NAME" value="FactCheckerApplicationKt" />
+    <option name="MAIN_CLASS_NAME" value="com.katonaaron.factcheckercli.FactCheckerApplicationKt" />
     <module name="fact-checker.fact-checker-cli.main" />
     <option name="PROGRAM_PARAMETERS" value="check-onto -i $PROJECT_DIR$/ontos/entailed-tbox.owl -kb $PROJECT_DIR$/ontos/fact.owl" />
     <shortenClasspath name="NONE" />

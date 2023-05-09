@@ -1,0 +1,357 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <ObjectProperty IRI="http://ontologydesignpatterns.org/cp/owl/semiotics.owl#hasInterpretant"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#hasModality"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/vn/abox/role/Patient"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://ontologydesignpatterns.org/cp/owl/semiotics.owl#denotes"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.essepuntato.it/2008/12/earmark#refersTo"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/vn/abox/role/Agent"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.essepuntato.it/2008/12/earmark#hasContent"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.essepuntato.it/2008/12/earmark#begins"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#pennpos"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/fred/quantifiers.owl#hasDeterminer"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#boxerpos"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="http://www.essepuntato.it/2008/12/earmark#ends"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Hippopotamus"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="rdfs:subClassOf"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="equivalentClass"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Organism"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Eat"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.essepuntato.it/2008/12/earmark#PointerRange"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/vn/data/Eat_39010100"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Person"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_23_26_you"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_19_22_eat"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.w3.org/2006/03/wn/wn30/instances/synset-hippopotamus-noun-1"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Person"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#docuverse"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/quantifiers.owl#a"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#NN"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#eat_1"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Event"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#VB"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="http://www.w3.org/2006/03/wn/wn30/schema/gloss"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.essepuntato.it/2008/12/earmark#StringDocuverse"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Hippopotamus"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.w3.org/2006/03/wn/wn30/instances/supersense-noun_animal"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Eat"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://www.w3.org/2006/03/wn/wn30/instances/synset-eat-verb-1"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="http://dbpedia.org/resource/Hippopotamus"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#PRP"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_2_14_hippopotamus"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#v"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#hippopotamus_1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#Possible"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#n"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="http://dbpedia.org/resource/Hippopotamus"/>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Hippopotamus"/>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Eat"/>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/vn/data/Eat_39010100"/>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Eat"/>
+        <Class IRI="http://www.w3.org/2006/03/wn/wn30/instances/synset-eat-verb-1"/>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Hippopotamus"/>
+        <Class IRI="http://www.w3.org/2006/03/wn/wn30/instances/synset-hippopotamus-noun-1"/>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Eat"/>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Event"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Hippopotamus"/>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Organism"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Hippopotamus"/>
+        <Class IRI="http://www.w3.org/2006/03/wn/wn30/instances/supersense-noun_animal"/>
+    </SubClassOf>
+    <ClassAssertion>
+        <Class IRI="http://www.essepuntato.it/2008/12/earmark#StringDocuverse"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#docuverse"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Eat"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#eat_1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Hippopotamus"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#hippopotamus_1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="http://www.essepuntato.it/2008/12/earmark#PointerRange"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_19_22_eat"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="http://www.essepuntato.it/2008/12/earmark#PointerRange"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_23_26_you"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="http://www.essepuntato.it/2008/12/earmark#PointerRange"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_2_14_hippopotamus"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Person"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1"/>
+    </ClassAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#boxerpos"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Eat"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#v"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#boxerpos"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Hippopotamus"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#n"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#boxerpos"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Person"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#n"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#hasModality"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#eat_1"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#Possible"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/vn/abox/role/Agent"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#eat_1"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#hippopotamus_1"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/vn/abox/role/Patient"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#eat_1"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/fred/quantifiers.owl#hasDeterminer"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#hippopotamus_1"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/quantifiers.owl#a"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://ontologydesignpatterns.org/cp/owl/semiotics.owl#denotes"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_19_22_eat"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#eat_1"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://ontologydesignpatterns.org/cp/owl/semiotics.owl#hasInterpretant"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_19_22_eat"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Eat"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.essepuntato.it/2008/12/earmark#refersTo"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_19_22_eat"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#docuverse"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#pennpos"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_19_22_eat"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#VB"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://ontologydesignpatterns.org/cp/owl/semiotics.owl#denotes"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_23_26_you"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#person_1"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://ontologydesignpatterns.org/cp/owl/semiotics.owl#hasInterpretant"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_23_26_you"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Person"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.essepuntato.it/2008/12/earmark#refersTo"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_23_26_you"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#docuverse"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#pennpos"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_23_26_you"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#PRP"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://ontologydesignpatterns.org/cp/owl/semiotics.owl#denotes"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_2_14_hippopotamus"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#hippopotamus_1"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://ontologydesignpatterns.org/cp/owl/semiotics.owl#hasInterpretant"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_2_14_hippopotamus"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#Hippopotamus"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.essepuntato.it/2008/12/earmark#refersTo"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_2_14_hippopotamus"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#docuverse"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#pennpos"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_2_14_hippopotamus"/>
+        <NamedIndividual IRI="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#NN"/>
+    </ObjectPropertyAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.essepuntato.it/2008/12/earmark#hasContent"/>
+        <IRI>http://www.ontologydesignpatterns.org/ont/fred/domain.owl#docuverse</IRI>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">A hippopotamus can eat you.
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.essepuntato.it/2008/12/earmark#begins"/>
+        <IRI>http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_19_22_eat</IRI>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">19</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.essepuntato.it/2008/12/earmark#ends"/>
+        <IRI>http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_19_22_eat</IRI>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">22</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_19_22_eat</IRI>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">eat</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.essepuntato.it/2008/12/earmark#begins"/>
+        <IRI>http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_23_26_you</IRI>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">23</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.essepuntato.it/2008/12/earmark#ends"/>
+        <IRI>http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_23_26_you</IRI>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">26</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_23_26_you</IRI>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">you</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.essepuntato.it/2008/12/earmark#begins"/>
+        <IRI>http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_2_14_hippopotamus</IRI>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.essepuntato.it/2008/12/earmark#ends"/>
+        <IRI>http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_2_14_hippopotamus</IRI>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">14</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://www.ontologydesignpatterns.org/ont/fred/domain.owl#offset_2_14_hippopotamus</IRI>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">hippopotamus</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.w3.org/2006/03/wn/wn30/schema/gloss"/>
+        <IRI>http://www.w3.org/2006/03/wn/wn30/instances/synset-hippopotamus-noun-1</IRI>
+        <Literal xml:lang="en-us" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">massive thick-skinned herbivorous animal living in or around rivers of tropical Africa</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.1.3.20151118-2017) https://github.com/owlcs/owlapi -->
+

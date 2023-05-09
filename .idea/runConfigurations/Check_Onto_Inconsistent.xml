@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Check-Onto Inconsistent" type="JetRunConfigurationType">
-    <option name="MAIN_CLASS_NAME" value="FactCheckerApplicationKt" />
+    <option name="MAIN_CLASS_NAME" value="com.katonaaron.factcheckercli.FactCheckerApplicationKt" />
     <module name="fact-checker.fact-checker-cli.main" />
-    <option name="PROGRAM_PARAMETERS" value="check-onto -i $PROJECT_DIR$/ontos/inconsistent.owl -kb $PROJECT_DIR$/ontos/fact.owl --matcher string " />
+    <option name="PROGRAM_PARAMETERS" value="check-onto -i $PROJECT_DIR$/ontos/inconsistent.owl -kb $PROJECT_DIR$/ontos/fact.owl" />
     <shortenClasspath name="NONE" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="false" />

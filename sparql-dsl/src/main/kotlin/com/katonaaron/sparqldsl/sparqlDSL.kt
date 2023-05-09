@@ -48,16 +48,56 @@ class Prefixes : ArrayList<Prefix>() {
         add(Prefix(trimmed, iri))
     }
 
-    fun prefix(prefix: String, uriString: String) {
-        prefix(prefix, IRI.create(uriString))
+    fun prefix(prefix: String, iriString: String) {
+        prefix(prefix, IRI.create(iriString))
+    }
+}
+
+sealed class PrefixedQueryBuilder {
+    private var prefixes: MutableList<Prefix> = mutableListOf()
+
+    fun prefix(prefix: String, iri: IRI) {
+        val trimmed = prefix.trim()
+        if (!trimmed.endsWith(':')) {
+            throw RuntimeException("prefix must end with ':' character")
+        }
+        if (trimmed.contains("\\s")) {
+            throw RuntimeException("prefix must not contain any whitespace")
+        }
+
+        prefixes.add(Prefix(trimmed, iri))
+    }
+
+    fun prefix(prefix: String, iriString: String) {
+        prefix(prefix, IRI.create(iriString))
+    }
+
+    open fun build(): String {
+        return buildString {
+            prefixes.forEach { (prefix, iri) ->
+                append("PREFIX $prefix ${iri.format()} \n")
+            }
+        }
     }
 }
 
 sealed class QueryBuilder {
-    private var prefixes: List<Prefix> = listOf()
+    private var prefixes: MutableList<Prefix> = mutableListOf()
 
-    fun prefixes(prefixesList: Prefixes.() -> Unit) {
-        prefixes = ArrayList(Prefixes().apply(prefixesList))
+    fun prefix(prefix: String, iri: IRI) {
+        val trimmed = prefix.trim()
+        if (!trimmed.endsWith(':')) {
+            throw RuntimeException("prefix must end with ':' character")
+        }
+        if (trimmed.contains("\\s")) {
+            throw RuntimeException("prefix must not contain any whitespace")
+        }
+
+        prefixes.add(Prefix(trimmed, iri))
+    }
+
+    fun prefix(prefix: String, iriString: String) {
+        prefix(prefix, IRI.create(iriString))
     }
 
     open fun build(): String {
@@ -197,20 +237,22 @@ class Atoms : ArrayList<String>() {
     }
 }
 
-class SelectQueryBuilder(
-    private val variables: List<Var>
-) : QueryBuilder() {
+class SelectQueryBuilder : QueryBuilder() {
     private val whereList = mutableListOf<String>()
-    var distinct = false
+    private var variables = emptyList<Var>()
+    private var distinct = false
 
-    init {
+    fun select(vararg variables: Var, distinct: Boolean = false) {
         if (variables.isEmpty()) {
-            throw RuntimeException("Must provide at least one variable")
+            this.variables = listOf(VAR_ALL)
+        } else {
+            this.variables = variables.toList()
         }
+        this.distinct = distinct
     }
 
-    fun where(atoms: Atoms.() -> Unit) {
-        whereList.add(Atoms().apply(atoms).build())
+    fun where(atomsBuilder: Atoms.() -> Unit) {
+        whereList.add(Atoms().apply(atomsBuilder).build())
     }
 
     override fun build(): String {
@@ -262,17 +304,18 @@ class AskQueryBuilder : QueryBuilder() {
     }
 }
 
-fun select(vararg variables: Var, selectBuilder: SelectQueryBuilder.() -> Unit): SelectQueryBuilder {
-    return SelectQueryBuilder(variables.toList()).apply(selectBuilder)
-}
-
-fun select(selectBuilder: SelectQueryBuilder.() -> Unit): SelectQueryBuilder {
-    return SelectQueryBuilder(listOf(VAR_ALL)).apply(selectBuilder)
-}
 
 fun queryBuilder(builderProducer: () -> QueryBuilder): String {
     val builder = builderProducer()
     return builder.build()
+}
+
+fun selectQueryBuilder(builder: SelectQueryBuilder.() -> Unit): String {
+    return SelectQueryBuilder().apply(builder).build()
+}
+
+fun askQueryBuilder(builder: AskQueryBuilder.() -> Unit): String {
+    return AskQueryBuilder().apply(builder).build()
 }
 
 data class QueryEngine(val manager: OWLOntologyManager, val reasoner: OWLReasoner, val strict: Boolean = false) {
@@ -281,8 +324,8 @@ data class QueryEngine(val manager: OWLOntologyManager, val reasoner: OWLReasone
     fun execute(query: Query): QueryResult = engine.execute(query)
 }
 
-fun sparql(engine: QueryEngine, builderProducer: () -> SelectQueryBuilder): List<Map<Var, IRI>> {
-    val queryString = queryBuilder(builderProducer)
+fun sparqlSelect(engine: QueryEngine, builder: SelectQueryBuilder.() -> Unit): List<Map<Var, IRI>> {
+    val queryString = selectQueryBuilder(builder)
     logger.trace("queryString = $queryString")
 
     val result = engine.execute(Query.create(queryString))
@@ -298,8 +341,8 @@ fun sparql(engine: QueryEngine, builderProducer: () -> SelectQueryBuilder): List
     }
 }
 
-fun sparqlAsk(engine: QueryEngine, builderProducer: AskQueryBuilder.() -> Unit): Boolean {
-    val queryString = queryBuilder { AskQueryBuilder().apply(builderProducer) }
+fun sparqlAsk(engine: QueryEngine, builder: AskQueryBuilder.() -> Unit): Boolean {
+    val queryString = askQueryBuilder(builder)
     logger.trace("queryString = $queryString")
 
     val result = engine.execute(Query.create(queryString))
@@ -310,29 +353,54 @@ fun sparqlAsk(engine: QueryEngine, builderProducer: AskQueryBuilder.() -> Unit):
 // test
 fun main() {
     val x = Var("x")
+    val y = Var("y")
 
-    val query = queryBuilder {
-        select(x) {
-            distinct = false
-            prefixes {
-                prefix("fred:", IRI.create("http://www.ontologydesignpatterns.org/ont/fred/domain.owl#"))
-                prefix("boxing:", IRI.create("http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#"))
-            }
-            where {
-                clazz(x)
-                equivalentClass(x, "fred:frog")
-            }
-            where {
-                clazz("fred:haha")
-            }
-            where {
-                clazz(OWLLiteralImplString("Joe"))
-            }
-            where {
-                clazz(IRI.create("asdas"))
-            }
+    val query = selectQueryBuilder {
+        prefix("fred:", IRI.create("http://www.ontologydesignpatterns.org/ont/fred/domain.owl#"))
+        prefix("boxing:", IRI.create("http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#"))
+
+        select(x, y, distinct = true)
+
+        where {
+            clazz(x)
+            clazz(y)
+            equivalentClass(x, "fred:frog")
+        }
+        where {
+            clazz("fred:haha")
+        }
+        where {
+            clazz(OWLLiteralImplString("Joe"))
+        }
+        where {
+            clazz(IRI.create("asdas"))
         }
     }
 
-    println("query = $query")
+    println("query = \n$query")
+
+    val query2 = selectQueryBuilder {
+        prefix("fred:", IRI.create("http://www.ontologydesignpatterns.org/ont/fred/domain.owl#"))
+        prefix("boxing:", IRI.create("http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#"))
+
+        select()
+
+        where {
+            clazz(x)
+            clazz(y)
+        }
+    }
+
+    println("query2 = \n$query2")
+
+
+    val query3 = askQueryBuilder {
+        prefix("fred:", IRI.create("http://www.ontologydesignpatterns.org/ont/fred/domain.owl#"))
+        prefix("boxing:", IRI.create("http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#"))
+        ask {
+            clazz("fred:haha")
+        }
+    }
+
+    println("query3 = \n$query3")
 }

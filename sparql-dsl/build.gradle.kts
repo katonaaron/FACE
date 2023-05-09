@@ -1,4 +1,5 @@
 val owlapi_version: String by project
+val hermit_version: String by project
 val sparqldl_version: String by project
 val slf4j_version: String by project
 
@@ -18,6 +19,13 @@ dependencies {
     implementation("net.sourceforge.owlapi:owlapi-osgidistribution") {
         version {
             strictly(owlapi_version)
+        }
+    }
+
+    // Hermit - only for testing
+    testImplementation("net.sourceforge.owlapi:org.semanticweb.hermit") {
+        version {
+            strictly(hermit_version)
         }
     }
 

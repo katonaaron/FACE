@@ -15,7 +15,6 @@ data class ClassConflictExplanation(val clazz: OWLClass, val justifications: Set
 
 
 sealed class Conflict
-object NoConflict : Conflict()
 data class Inconsistency(val explanations: Set<ConflictExplanation>) : Conflict()
 data class Incoherence(val explanations: Set<ClassConflictExplanation>) : Conflict()
 
@@ -45,3 +44,54 @@ sealed class OntologyFactCheckerResult {
 }
 
 data class FactCheckerResult(val result: OntologyFactCheckerResult, val learnedOntology: OWLOntology)
+
+data class VerbalizedOntology(val onto: OWLOntology, val sentences: List<String>)
+
+data class VerbalizedAxiom(val axiom: OWLAxiom, val sentence: String, val sources: Set<IRI>)
+
+data class VerbalizedExplanation(val axioms: Set<VerbalizedAxiom>)
+data class VerbalizedAxiomExplanation(val axiom: VerbalizedAxiom, val justifications: Set<VerbalizedExplanation>)
+
+data class VerbalizedConflictExplanation(val inputAxioms: Set<VerbalizedAxiom>, val trustedAxioms: Set<VerbalizedAxiom>)
+data class VerbalizedClassConflictExplanation(
+    val clazz: OWLClass,
+    val justifications: Set<VerbalizedConflictExplanation>
+)
+
+
+sealed class VerbalizedConflict {
+    data class Inconsistency(val explanations: Set<VerbalizedConflictExplanation>) : VerbalizedConflict()
+    data class Incoherence(val explanations: Set<VerbalizedClassConflictExplanation>) : VerbalizedConflict()
+}
+
+data class VerbalizedEntailment(val entailedAxioms: Set<VerbalizedAxiomExplanation>) {
+    val isEmpty
+        get() = entailedAxioms.isEmpty()
+}
+
+sealed class VerbalizedFactCheckerResult {
+    abstract val entailment: VerbalizedEntailment
+    abstract val learnedOntology: OWLOntology
+    abstract val alignedOntology: OWLOntology
+
+    data class True(
+        override val entailment: VerbalizedEntailment,
+        override val learnedOntology: OWLOntology,
+        override val alignedOntology: OWLOntology
+    ) :
+        VerbalizedFactCheckerResult()
+
+    data class False(
+        val reason: VerbalizedConflict,
+        override val entailment: VerbalizedEntailment,
+        override val learnedOntology: OWLOntology,
+        override val alignedOntology: OWLOntology
+    ) : VerbalizedFactCheckerResult()
+
+    data class Unknown(
+        override val entailment: VerbalizedEntailment,
+        override val learnedOntology: OWLOntology,
+        override val alignedOntology: OWLOntology
+    ) :
+        VerbalizedFactCheckerResult()
+}
